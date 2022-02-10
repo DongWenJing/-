@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.mapper.UserMapper4">
+
+    <!--
+    sql最好都小写
+    结果集映射必须与属性名称一致
+    resultType适用于单表查询/结果集的字段与属性一致
+    如果resultType 不满足要求,就使用resultMap
+    -->
+    <select id="findAll" resultMap="resultMap">
+        select id as user_id,name as user_name,
+               age user_age,sex user_sex
+        from demo_user
+    </select>
+
+    <resultMap id="resultMap"  type="User">
+        <!--id标识主键,必须添加的-->
+        <id column="user_id" property="id"></id>
+        <!--其他属性-->
+        <result column="user_name" property="name"></result>
+        <result column="user_age" property="age"></result>
+        <result column="user_sex" property="sex"></result>
+    </resultMap>
+
+    <sql id="to_select">
+        select id,name,age,sex from demo_user
+    </sql>
+</mapper>

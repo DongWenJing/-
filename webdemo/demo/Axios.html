@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>ajax入门案例</h1>
+		<script src="../js/axios.js"></script>
+		<script>
+			//axios的优化,提取共性
+			axios.defaults.baseURL = "http://localhost:8080"
+			//编辑自己的JS代码
+			let url1="/axios/findStr"
+			axios.get(url1)
+				 .then(function(promise){
+					 console.log(promise.data)
+					
+				 })
+				 //2.带参数的业务调用
+				 let url2 = "/axios/getUserById?id=100";
+				 axios.get(url2)
+						.then(function(promise){
+							console.log(promise.data)
+						})					
+				//3.对象参数传递法 利用API自动拼接参数
+						let user = {id:100,name:"tomcat",age:18};
+						axios.get("/axios/findUser",{params:user})
+							.then(function(promise){
+								console.log(promise.data)
+							})
+				//4.前后端调用-ResultFul结构实现数据传递 第一种简单操作
+				let rest = {id : 200,name : "tomcat",age : 19}
+					axios.get("/axios/resultFul/"+rest.id+"/"+rest.name+"/"+rest.age)
+					.then(function(promise){
+						console.log(promise.data)
+					})
+					
+				/**
+				 * 5.RestFul结构实现数据传递
+				 * 第二种:模板字符串写法
+				 * 语法:  反引号   ` `
+				 * 字符取值: ${rest2.id}
+				 * 作用:1.常见字符串拼接
+				 * 		2.可以保证代码的数据结构
+				 */	
+				let rest2 = {id:200,name: "tomcat",age:19}
+				axios.get(`/axios/result/${rest2.id}/${rest2.name}/${rest2.age}`)
+					.then(function(promise){
+						console.log(promise.data)
+						})
+				//模板字符串 保证代码格式
+				let div = `<div>
+							<p>我欲乘风归去</p>
+							<p>又恐琼楼玉宇</p>
+							<p>高处不胜寒</p>
+							<p>起舞弄清影</p>
+							<p>何似在人间</p>
+						  </div>`
+		</script>		
+	</body>
+</html>

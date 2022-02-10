@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--1.namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.UserMapper">
+    <!--2.执行业务操作
+        id: 与接口方法一一对应.
+        resultType: 返回的POJO对象类型全路径
+                    将结果集自动的封装为对象
+     -->
+    <!-- 查询操作 -->
+    <select id="findAll" resultType="com.jt.pojo.User">
+        select * from demo_user
+    </select>
+
+    <!--新增操作
+       语法:
+         1.取值操作,#{属性值}
+         2.只有查询需要写resultType
+         3.如果是更新操作可以自动返回影响的行数
+         -->
+
+    <insert id="saveUser">
+        insert into demo_user(id,name,age,sex)
+            value (null,#{name},#{age},#{sex})
+    </insert>
+
+    <insert id="saveUser2">
+        insert into demo_user(id,name,age,sex)
+            value (null,#{name},#{age},#{sex})
+    </insert>
+    <!--
+    关于取值操作的说明:#{属性值},${属性值}
+    1.#号取值采用占位符的方式, 更加安全 防止SQL注入攻击
+    2.$符一般使用场景,以字段为参数时使用
+    3.使用#号时,默认会添加一对""号
+    4.能使用#号   绝不用$!!!
+    -->
+    <update id="updateUserById">
+        update demo_user set name=#{name}
+        where id = ${id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from demo_user where name=#{name}
+    </delete>
+
+    <!--
+   知识点: 如果只传递一个参数,则名称任意~!
+   原因: mybatis 单值传参时,与下标有关,和名称无关
+    -->
+    <delete id="deleteUser1">
+        delete from demo_user where name=#{q}
+    </delete>
+
+    <select id="findUser" resultType="com.jt.pojo.User">
+        select * from demo_user where id = #{id}
+    </select>
+
+    <!--
+    取值用法:#{对象中的属性/Map中的key}
+    转译字符:
+        大于 > &gt;
+        小于 < $lt;
+        与号 & &map;
+    万能转译标签:<![CDATA[ 内容 ]>
+    xml流文件 报文 更加安全 解析复杂
+    字节流信息:直播~
+    -->
+    <select id="selectMap" resultType="com.jt.pojo.User">
+        <![CDATA[
+        select * from demo_user where age>#{minAge} and age<#{maxAge}
+        ]]>
+    </select>
+
+    <select id="findUserByMId" resultType="com.jt.pojo.User">
+        select * from demo_user where id>#{minId} and id &lt;#{maxId}
+    </select>
+
+    <!--
+    别名包:com.jt.pojo  只要定义成功之后,以后写类名即可
+    -->
+    <select id="findUserByLike" resultType="User">
+        <include refid="selectDemoUser"/> where name like "%"#{name}"%"
+    </select>
+
+    <!--SQL标签介绍:
+            可以将重复的/复杂的/特殊的SQL封装到SQL标签中
+    -->
+    <sql id="selectDemoUser">
+        select id,name,age,sex from demo_user
+    </sql>
+
+    <!--
+        mybatis集合操作:
+          1."集合"的类型:array/list/map集合
+          2.目的:从集合中获取其中的数据,一个一个取值
+          3.方案:mybatis提供了循环遍历的方式
+          4.语法:
+                4.1 collection表示需要遍历的数据
+                数组:    collection="array"
+                list集合:collection="list"
+                map<key,array/list>集合: collection="map中的key"
+                4.2 open/close 开始和接收标签
+                4.3 item: 定义取值的变量 通过#{xx}取值
+                4.4 separator： 分割符
+    -->
+    <select id="findUserByIn" resultType="User">
+        select * from demo_user where id in
+<foreach collection="array" open="(" close=")"
+  item="id" separator=",">
+    #{id}
+</foreach>
+    </select>
+
+    <select id="findUserByIn2" resultType="User">
+        select * from demo_user where id in
+        <foreach collection="list" open="(" close=")"
+                 item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <!--Map数据封装array集合的写法-->
+    <select id="findUserByInMap" resultType="User">
+        <include refid="selectDemoUser"/> demo_user where id in(
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+    </select>
+
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.mapper.UserMapper2">
+
+    <select id="findUser" resultType="User">
+        <include refid="find"></include><where>
+        <if test="id !=null">id=#{id}</if>
+        <if test="name !=null">and name=#{name}</if>
+        <if test="age !=null">and age=#{age}</if>
+        <if test="sex !=null">and sex=#{sex}</if>
+    </where>
+    </select>
+    <sql id="find">
+        select id,name,age,sex from demo_user
+    </sql>
+
+    <!--
+    思考:如何做到通用
+    使用动态SQL:根据对象中不为null的属性当做set的条件
+    标签说明: set标签在修改操作中去除多余的一个逗号
+    -->
+    <update id="updateUser">
+        update demo_user <set>
+        <if test="name !=null"> name=#{name},</if>
+        <if test="age !=null"> age=#{age},</if>
+        <if test="sex !=null">  sex=#{sex}</if>
+    </set>
+        where id=#{id}
+    </update>
+
+    <!--分支结构的语法-->
+    <select id="findUserChoose" resultType="User">
+        <include refid="find"></include> where
+         <choose>
+             <when test="name != null">name=#{name}</when>
+             <when test="age != null">age=#{age}</when>
+           <otherwise>sex=#{sex}</otherwise>
+         </choose>
+    </select>
+</mapper>

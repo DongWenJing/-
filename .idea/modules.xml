@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/2111.iml" filepath="$PROJECT_DIR$/.idea/2111.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringMVC_demo1/SpringMVC_demo1.iml" filepath="$PROJECT_DIR$/SpringMVC_demo1/SpringMVC_demo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringMVC_review/SpringMVC_review.iml" filepath="$PROJECT_DIR$/SpringMVC_review/SpringMVC_review.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Spring_demo1/Spring_demo1.iml" filepath="$PROJECT_DIR$/Spring_demo1/Spring_demo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Spring_demo2_aop/Spring_demo2_aop.iml" filepath="$PROJECT_DIR$/Spring_demo2_aop/Spring_demo2_aop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybatis_demo1/mybatis_demo1.iml" filepath="$PROJECT_DIR$/mybatis_demo1/mybatis_demo1.iml" />
+    </modules>
+  </component>
+</project>

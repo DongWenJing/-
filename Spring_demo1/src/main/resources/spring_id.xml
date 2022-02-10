@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        知识点讲解:
+            1.bean 被spring容器管理的对象称之为bean
+            2.id    全局唯一变量一般类型首字母小写
+            3.class class的路径信息,需要写全名
+    -->
+    <!--1.让spring容器管理car,参数的个数,决定调用的构造方法-->
+    <bean id="car" class="com.jt.demo7_id.Car">
+        <constructor-arg name="name" value="奥迪RS8"></constructor-arg>
+        <constructor-arg name="color" value="绿色"></constructor-arg>
+    </bean>
+
+    <!--2.xml配置文件为属性赋值-->
+    <bean id="tiger" class="testIoc.Tiger">
+        <property name="age" value="6"></property>
+        <property name="name"   value="虎虎~"></property>
+    </bean>
+
+</beans>

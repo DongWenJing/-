@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>ajax-post请求</h1>
+		<script src="../js/axios.js"></script>
+		<script>
+			//1.axios的优化,提取共性
+			axios.defaults.baseURL = "http://localhost:8080"
+			/**
+			 * 需求:
+			 * 	1.发送第一个ajax请求之后得到结果当做第二个ajax的参数
+			 */
+			let user = {id:100,name:"tom猫",age:20}
+			axios.post("axios/saveUser",user)
+				 .then(function(promise){
+					 console.log(promise.data)
+					 
+				 })
+				 
+			async function saveUser(){
+				let user = {id:100,name:"初七好呀"}
+				//方式1 选择了所有的属性有些不需要的较多余 
+				// let promise = await axios.post("/axios/saveUser",user)
+				// console.log(promise.data)
+				//方式2 可以选择自己想要的属性
+				let {data:result,status:code}
+					= await axios.post("/axios/saveUser",user)
+				console.log(result)	
+				console.log(code)	
+			}
+			/*调用函数*/
+			saveUser()
+			
+			/*箭头函数写法*/
+			let user2 = {id:200,name:"箭头函数试炼"}
+			axios.post("/axios/saveUser",user2)
+				 .then( promise => {
+					 console.log(promise.data)
+					  })
+		</script>		
+	</body>
+</html>

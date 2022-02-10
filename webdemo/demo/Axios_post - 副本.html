@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>ajax-post请求</h1>
+		<script src="../js/axios.js"></script>
+		<script>
+			//1.axios的优化,提取共性
+			axios.defaults.baseURL = "http://localhost:8080"
+			/**
+			 *2.axios的post请求说明
+			 *2.1 什么时候使用post请求  新增操作
+			 *知识点:
+			 * 	let user js 对象  json串 java对象
+			 * 说明:
+			 * 		前端代码传递JS对象,而后端使用的是Java对象
+			 * 		2种对象没有办法直接转化,需要
+			 */
+			let user = {id:100,name:"tom猫",age:20}
+			axios.post("axios/saveUser",user)
+				 .then(function(promise){
+					 console.log(promise.data)
+				 })
+			
+		</script>		
+	</body>
+</html>

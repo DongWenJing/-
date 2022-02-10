@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.mapper.UserMapper3">
+
+<insert id="saveUser">
+    insert into demo_user (id,name,age,sex) value(null,#{name},#{age},#{sex})
+</insert>
+
+    <update id="updateUserById">
+        update demo_user set name=#{name} where id=#{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from demo_user where id=#{id}
+    </delete>
+
+    <select id="findUserById" resultType="com.jt.pojo.User">
+        <include refid="to_select"></include> where id=#{id}
+    </select>
+    <select id="findUserByMap" resultType="com.jt.pojo.User">
+        <include refid="to_select"></include> <![CDATA[
+        where id>#{id}
+         and age<#{age}
+        ]]>
+    </select>
+    <select id="findByColumn" resultType="com.jt.pojo.User">
+        <include refid="to_select"></include> where
+          ${column}=#{value}
+    </select>
+    <select id="findUserByMId" resultType="User">
+        <include refid="to_select"></include> where
+        <![CDATA[
+        id >#{minId} and id <#{maxId}
+        ]]>
+    </select>
+    <select id="findUserByLike" resultType="User">
+        <include refid="to_select"></include>
+    where name like #{name}"%"
+    </select>
+    <select id="findUserByIn" resultType="User">
+        <include refid="to_select"></include> where id in(
+        <foreach collection="array"
+                 item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+    <select id="findUserByInMap" resultType="User">
+        <include refid="to_select"></include> where id in (
+        <foreach collection="ids"
+                 item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+<!--
+mybatis:动态SQL语法,根据业务条件,动态拼接SQL
+语法:
+    1.if标签,如果判断为真,才拼接SQL
+    2.where标签: 去除where后边多余的一个and/or
+-->
+    <select id="findUser" resultType="User">
+        <include refid="to_select"></include>
+<where>
+    <if test="id !=null">id=#{id}</if>
+    <if test="name !=null">and  name=#{name}</if>
+    <if test="age !=null">and age=#{age}</if>
+    <if test="sex !=null">and sex=#{sex}</if>
+</where>
+    </select>
+
+    <sql id="to_select">
+        select id,name,age,sex from demo_user
+    </sql>
+</mapper>
