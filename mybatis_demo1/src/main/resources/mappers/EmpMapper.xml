@@ -3,6 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jt.mapper.EmpMapper">
+<!--
+    规则:
+        使用关联查询时,不能出现同名字段,否则映射会报错的
+-->
+    <select id="findEmp" resultMap="empRM">
+        select emp.*,dept.dept_name
+        from emp,dept
+        where emp.dept_id = dept.dept_id
+    </select>
+<!--
+   知识点:
+        1.autoMapping="true"
+        如果字段名称和属性名称一致,则自动映射
+        2.association 一对一对象
+        3.JavaType   固定搭配封装对象的类型
+        总结:Mybatis 可以实现关联查询的数据封装
+            可以为主对象封装数据/同时可以为引用封装数据
+   -->
+    <resultMap id="empRM" type="Emp" autoMapping="true">
+<!--1. 标识主键  -->
+        <id column="id" property="id"/>
+<!--2. 一对一封装Dept对象  -->
+        <association property="dept" javaType="Dept" autoMapping="true">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"/>
+        </association>
+    </resultMap>
 
     <sql id="to_select">
         select id,name,age,sex from demo_user
