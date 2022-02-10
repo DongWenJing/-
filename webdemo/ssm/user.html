@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户列表展现案例</title>
+	</head>
+	<body>
+		<div id="app">
+			<h1 align="center">用户列表展现案例</h1>
+			<table align="center" border="1px" width="800px">
+				<tr align="center">
+					<td>ID编号</td>
+					<td>姓名</td>
+					<td>年龄</td>
+					<td>性别</td>
+					<td>操作</td>
+				</tr>
+				<!-- 
+				 v-for表示循环遍历vue中的属性
+				 v-text 动态获取数据,如果没有解析,则不展示
+				 -->
+				<tr align="center" v-for="user in userList">
+					<td v-text="user.id"></td>
+					<td v-text="user.name"></td>
+					<td v-text="user.age"></td>
+					<td v-text="user.sex"></td>
+					<td ><button @click="deleteUserById(user.id)">删除</button></td>
+				</tr>
+			</table>
+		</div>
+		
+		<script src="../js/axios.js"></script>
+		<script src="../js/vue.js"></script>
+		<script>
+			/**
+			 *案例:
+			 * 	  1.url地址:http://localhost:8090/user/findAll
+			 * 	  2.获取数据之后要求页面表格展现
+			 *    3.要求使用vue.js的循环遍历标签完成任务
+			 */
+			axios.defaults.baseURL="http://localhost:8090"
+			const app = new Vue({
+				el: "#app",
+				data: {
+					userList : []
+				},
+				methods: {
+					async findUser(){
+					let {data: result} = await axios.get("/user/findAll")
+					console.log(result)
+					//ajax返回的结果,赋值给vue.js的属性,之后利用属性
+					this.userList = result
+					},
+				async deleteUserById(id){
+						let {data: result} = await axios.get(`/user/deleteUserById/${id}`)
+					
+						alert("删除编号:"+id)
+					}
+				},
+				mounted(){ //生命周期函数由系统自动调用
+					this.findUser()
+				}
+			})
+		</script>
+	</body>
+</html>
