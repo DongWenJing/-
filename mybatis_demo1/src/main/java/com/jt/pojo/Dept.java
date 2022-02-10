@@ -12,5 +12,5 @@ public class Dept implements Serializable {
     private Integer deptId;
     private String  deptName;
     //思考:如何表示一个部门下有多个员工
-    private List<Emp>  emp;
+    private List<Emp>  emps;
 }

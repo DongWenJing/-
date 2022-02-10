@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
     List<Emp> findEmp();
+
+    List<Emp> findEmp1(Emp emp);
 }

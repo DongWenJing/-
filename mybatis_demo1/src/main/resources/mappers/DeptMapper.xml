@@ -4,6 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jt.mapper.DeptMapper">
 
+    <select id="findAll" resultMap="deptRM">
+        select dept.dept_name,emp.* from dept,emp
+        where dept.dept_id = emp.dept_id
+    </select>
+    <!--
+        固定搭配:collection + ofType
+            -->
+    <resultMap id="deptRM" type="Dept" autoMapping="true">
+        <id column="dept_id" property="deptId"/>
+        <result column="dept_name" property="deptName"/>
+        <!--一对多封装   -->
+        <collection property="emps" ofType="Emp" autoMapping="true">
+            <id column="id" property="id"></id>
+        </collection>
+    </resultMap>
     <sql id="to_select">
         select id,name,age,sex from demo_user
     </sql>

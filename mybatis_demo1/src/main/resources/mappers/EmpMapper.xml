@@ -12,6 +12,11 @@
         from emp,dept
         where emp.dept_id = dept.dept_id
     </select>
+
+<!--    <select id="findEmp1" resultType="Emp">-->
+<!--        select * from demo_user where name=#{name}-->
+<!--    </select>-->
+
 <!--
    知识点:
         1.autoMapping="true"
@@ -31,7 +36,7 @@
         </association>
     </resultMap>
 
-    <sql id="to_select">
-        select id,name,age,sex from demo_user
-    </sql>
+<!--    <sql id="to_select">-->
+<!--        select id,name,age,sex from demo_user-->
+<!--    </sql>-->
 </mapper>
