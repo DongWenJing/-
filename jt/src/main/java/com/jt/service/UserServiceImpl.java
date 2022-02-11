@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService{
         //1.将密码加密处理
         String password = user.getPassword();
         password =  DigestUtils.md5DigestAsHex(password.getBytes());
+
         user.setPassword(password);
         //2.查询数据库
         User userDB = userMapper.findUserByUp(user);
@@ -44,8 +45,9 @@ public class UserServiceImpl implements UserService{
             //用户名和密码不对,返回的token应该为空
             return null;
         }
-        //说明:用户名和密码正确 返回秘钥token
-        String token = "秘钥";
+        //说明:用户名和密码正确 返回秘钥token,要求秘钥唯一
+        //UUID 内部hash散列函数,根据当前毫秒数进行散列,几乎可以保证不重复
+        String token = UUID.randomUUID().toString();
         return token;
     }
 }

@@ -8,4 +8,8 @@
     <select id="findAll" resultType="User">
         select * from user
     </select>
+
+    <select id="findByParentId" resultMap="Rights">
+        select * from rights where parent_id=#{parent_id}
+    </select>
 </mapper>
