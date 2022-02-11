@@ -25,10 +25,12 @@ public class UserController {
       return userService.findAll();
     }
     /**
+     * 删除操作
      * URL:localhost:8090/user/deleteById
      * 参数:id
      * 返回值结果:不要
      */
+    //@DeleteMapping("/deleteUserById") 再往
     @GetMapping("/deleteUserById/{id}")
     public void deleteUserById(@PathVariable Integer id){  //利用@PathVariable注解,动态获取路径中的数据,要求名称必须匹配
         userService.deleteUserById(id);

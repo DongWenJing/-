@@ -52,9 +52,10 @@
 					this.userList = result
 					},
 				async deleteUserById(id){
-						let {data: result} = await axios.get(`/user/deleteUserById/${id}`)
-					
+					 await axios.get(`/user/deleteUserById/${id}`)
+					 //await axios.delete("/user/deleteUserById?id="+id)
 						alert("删除编号:"+id)
+						await this.findUser()
 					}
 				},
 				mounted(){ //生命周期函数由系统自动调用
