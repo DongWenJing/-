@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jt.mapper.RightsMapper">
+<select id="findByParentId" resultMap="RightsRM">
+    select
+    p.id pid,
+    p.name pname,
+    p.parent_id pparent_id,
+    p.path ppth,
+    p.level plevel,
+    p.created p_created,
+    p.updated p_updated,
+    c.*
+    from
+  rights c left join rights p
+    on  c.parent_id = p.id
+    where p.parent_id = #{parentId}
+
+</select>
+
+    <select id="getRights" resultMap="rightsRM">
+        select p.*,c.id = c_id,c.name c_name,c.parent_id c_parent_id,
+               c.path c_path,c.level c_level,c.created c_created,
+               c.updated c_updated
+        from rights p,rights c
+        where p.id = c.parent_id
+          and p.level = 1
+    </select>
+
+    <resultMap id="rightsRM" type="Rights" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--如果字段和对象属性名称一致-->
+        <collection property="children" ofType="Rights" autoMapping="true" columnPrefix="c_">
+            <id column="c_id" property="id"/>
+        </collection>
+    </resultMap>
+
+<resultMap id="RightsRM" type="Rights" autoMapping="true">
+    <id column="pid" property="id"></id>
+    <result column="pname" property="name"/>
+    <result column="pparent_id" property="parentId"/>
+    <result column="ppath" property="path"/>
+    <result column="plevel" property="level"/>
+    <result column="p_created" property="created"/>
+    <result column="p_updated" property="updated"/>
+<!--  一对多使用collection标签+ofType  -->
+    <collection property="children" ofType="Rights" autoMapping="true">
+        <id column="id" property="id"></id>
+    </collection>
+</resultMap>
+
+</mapper>
