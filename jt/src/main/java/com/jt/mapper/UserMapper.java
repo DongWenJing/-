@@ -27,6 +27,7 @@ public interface UserMapper {
 //    @Insert("insert into user value(varchar(40) username=#{username},varchar(40) password=#{password}," +
 //            "varchar(40) phone=#{phone},varchar(40) email=#{email})")
     void addUser(User user);
+
     @Select("select * from user where id=#{id}")
     User findUserById(Integer id);
 
