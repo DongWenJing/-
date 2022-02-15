@@ -9,7 +9,19 @@
         select * from user
     </select>
 
-    <select id="findByParentId" resultMap="Rights">
-        select * from rights where parent_id=#{parent_id}
+    <select id="findUserList" resultType="User">
+        select * from user where username like "%"#{query}"%"
+        limit #{startNum},#{size}
     </select>
+    <select id="findCount" resultType="long" >
+        select count(1) from user where username like "%"#{query}"%"
+    </select>
+
+    <insert id="addUser">
+        insert into user values (null,#{username},#{password},#{phone},#{email},#{status},#{created},#{updated})
+    </insert>
+
+    <update id="updateUser" >
+        update user set phone=#{phone},email=#{email},updated=#{updated} where id=#{id}
+    </update>
 </mapper>

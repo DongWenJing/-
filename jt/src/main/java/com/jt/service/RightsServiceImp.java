@@ -24,12 +24,14 @@ public class RightsServiceImp implements RightsService {
         Integer parentId = 0;
         List<Rights> oneList = rightsMapper.findByParentId(parentId);
         //2.如何查询每一个一级下的二级
-        for (Rights oneRights : oneList) {
-            Integer oneId = oneRights.getId();
-            //获取的是二级集合
-           List<Rights> twoList = rightsMapper.findByParentId(oneId);
-           oneRights.setChildren(twoList);
-        }
+//        for (Rights oneRights : oneList) {
+//            Integer oneId = oneRights.getId();
+//            //获取的是二级集合
+//           List<Rights> twoList = rightsMapper.findByParentId(oneId);
+//
+//           oneRights.setChildren(twoList);
+//        }
         return oneList;
+       // return rightsMapper.getRights();
     }
 }
