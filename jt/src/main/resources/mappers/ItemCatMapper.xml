@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jt.mapper.ItemCatMapper">
+<insert id="saveItemCat">
+    insert  into item_cat values (null,#{parentId},#{name},#{status},#{level},#{created},#{updated})
+</insert>
+<update id="updateItemCat" >
+    update item_cat set name=#{name},status=#{status},updated =#{updated}
+    where id=#{id}
+</update>
+
+<delete id="deleteItemCatById3" >
+    delete from item_cat
+    where
+            parent_id in
+            (select id from item_cat where parent_id=#{id})
+       or
+        parent_id = #{id}
+       or
+        id = #{id}
+</delete>
+</mapper>
