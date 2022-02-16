@@ -70,12 +70,12 @@ public class UserController {
     /**
      * 业务说明:新增用户
      * URL:/user/addUser
-     * 请求类型:PUT
+     * 请求类型:post
      * 请求参数:整个form表单数据封装为js对象进行参数传递
      * 返回值:SysResult对象
      */
-    @PutMapping("/addUser")
-    public SysResult addUser( User user){
+    @PostMapping("/addUser")
+    public SysResult addUser(@RequestBody User user){
         userService.addUser(user);
         return SysResult.success();
     }

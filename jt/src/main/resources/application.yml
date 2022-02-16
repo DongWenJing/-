@@ -13,7 +13,7 @@ spring:
     password: root
 
 #SpringBoot整合Mybatis-plus
-mybatis:
+mybatis-plus:
   #指定别名包
   type-aliases-package: com.jt.pojo
   #扫描指定路径下的映射文件
