@@ -1,4 +1,4 @@
-package com.jt.controller;
+package com.jt.aop;
 
 import com.jt.vo.SysResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-//@RestController
-//@RequestBody
+//@RestController  //拦截Controller层的异常
+//@RequestBody    //返回的数据为json串
 @RestControllerAdvice
 public class SystemExceptionAOP {
 
