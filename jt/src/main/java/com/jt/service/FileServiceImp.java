@@ -29,7 +29,9 @@ public class FileServiceImp implements FileService{
      * @param file
      * @return
      */
-    private String localDir = "E:/Code/JT_SOFT/images";
+   // private String localDir = "E:/Code/JT_SOFT/images";//windows的路径
+    private String localDir = "/usr/local/src/images";//linux的路径
+    private String preUrl  = "http://image.jt.com";
     @Override
     public ImageVO upload(MultipartFile file)  {
 
@@ -79,14 +81,13 @@ public class FileServiceImp implements FileService{
             file.transferTo(new File(realFilePath));
             //6.返回ImageVO对象
             String virtualPath = datePath+fileName;
-            String urlPath = "https://img14.360buyimg.com/n0/jfs/t1/98058/27/22325/188272/620ba777E57f96e29/23e4957b779d0b24.jpg"; //网络图片
+            String urlPath = preUrl + virtualPath;
+            System.out.println(urlPath);
             ImageVO imageVO = new ImageVO(virtualPath,urlPath,fileName);
             return imageVO;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
 

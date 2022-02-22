@@ -89,6 +89,17 @@ public class ItemServiceImp implements ItemService{
         itemDescMapper.insert(itemDesc);
     }
 
+    /**
+     * 1.删除商品信息
+     * 2.删除商品详情
+     * @param id
+     */
+    @Override
+    public void deleteItemById(Integer id) {
+        itemMapper.deleteById(id);
+        itemDescMapper.deleteById(id);
+    }
+
     //复写下分页查询操作
     public PageResult getItemList1(PageResult pageResult){
         //获取条件构造器
